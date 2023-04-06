@@ -2,7 +2,8 @@ package main
 
 import (
 	"fmt"
-	"strings"
+	"math/rand"
+	"time"
 )
 
 type user struct {
@@ -41,8 +42,9 @@ func main() {
 	// users = append(users, user{UserName: username, PIN: password, balance: inputAmount})
 	// fmt.Println(users)
 
-	var str string
-	fmt.Scan(&str)
-	str = strings.ReplaceAll(str, ",", "")
-	fmt.Println(str)
+	min := 1000000000
+	max := 9999999999
+	rand.Seed(time.Now().UnixNano())
+	fmt.Println(rand.Intn(max-min) + min)
+
 }

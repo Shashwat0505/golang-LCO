@@ -3,6 +3,7 @@ package main
 import (
 	"errors"
 	"fmt"
+	"math/rand"
 	"os"
 	"strconv"
 	"strings"
@@ -312,18 +313,18 @@ func CreateNewAccount() {
 	fmt.Println("Please enter username")
 	var username string
 	fmt.Scan(&username)
-	fmt.Println("Please enter account number")
-	var accountNo string
-	fmt.Scan(&accountNo)
-label12:
-	fmt.Println("Please enter password for new Account")
-	var password string
-	fmt.Scan(&password)
-	if !IsValidPin(password) {
-		fmt.Println("!---PIN should be only digits and its length should be 4---!")
-		goto label12
+	min := 1000000000
+	max := 9999999999
+	rand.Seed(time.Now().UnixNano())
+	accNoInt := (rand.Intn(max-min) + min)
+	accNo := strconv.Itoa(accNoInt)
+	fmt.Println("Your account no is:-", accNo)
 
-	}
+	min1 := 1000
+	max1 := 9999
+	pinNo := (rand.Intn(max1-min1) + min1)
+	accPinNo := strconv.Itoa(pinNo)
+	fmt.Println("PIN for your new account is:-", accPinNo)
 
 label4:
 	fmt.Println("Please enter amount of balance you want to add to account")
@@ -335,7 +336,7 @@ label4:
 		goto label4
 	}
 
-	users = append(users, user{UserName: username, PIN: password, AccountNo: accountNo, balance: inputAmount})
+	users = append(users, user{UserName: username, PIN: accPinNo, AccountNo: accNo, balance: inputAmount})
 
 	main()
 
@@ -353,6 +354,7 @@ func LogInToAccount() (user, error) {
 	fmt.Scan(&pin)
 
 	for _, val := range users {
+
 		if val.AccountNo == acno && val.PIN == pin {
 
 			fmt.Println("!***Welcome ", val.UserName, "***!")
@@ -397,15 +399,3 @@ func IsValidWithdrawAmount(withdrawCash float64, balanceCash float64) bool {
 }
 
 // --------------------------------IsValidPin-------------------------------------------------------------------------------------------------
-
-func IsValidPin(s string) bool {
-	if len(s) != 4 {
-		return false
-	}
-	for _, val := range s {
-		if unicode.IsLetter(val) || unicode.IsSymbol(val) || unicode.IsSpace(val) || unicode.IsPunct(val) {
-			return false
-		}
-	}
-	return true
-}
