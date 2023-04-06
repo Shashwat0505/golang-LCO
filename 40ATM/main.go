@@ -77,7 +77,9 @@ label1:
 
 	case 4:
 		fmt.Println("!***Thank you for visiting***!")
-		return
+		time.Sleep(time.Second)
+		os.Exit(0)
+
 	default:
 		fmt.Println("!---Please enter valid input---!")
 		goto label1
@@ -92,7 +94,7 @@ func withdrawMoney(u *user) {
 label6:
 
 	fmt.Println("!---Decimal values shold not be entered---!")
-	fmt.Println("Enter the amount in multiple of 500 to withdraw:-")
+	fmt.Println("Enter the amount in multiple of 100 and greater than 500 to withdraw:-")
 	var withdrawAmont string
 	fmt.Scan(&withdrawAmont)
 	withdrawAmont = strings.ReplaceAll(withdrawAmont, ",", "")
@@ -232,6 +234,35 @@ label3:
 		default:
 			fmt.Println("Incorrect input!Please try again")
 			goto label10
+
+		}
+
+	}
+	if depositAmount < 100 {
+		fmt.Println("You can't enter this  amount", depositAmount)
+		fmt.Println("!--Minimum amount should be greater than 100---!")
+
+		fmt.Println("Do you want to continue?")
+		fmt.Println("Press y for yes")
+		fmt.Println("Press n for no")
+
+		var choose string
+		fmt.Scan(&choose)
+		choose = strings.ToLower(choose)
+	label11:
+		switch choose {
+		case "y":
+			return
+
+		case "n":
+			fmt.Println("!***Thank you for visiting***!")
+			time.Sleep(time.Millisecond)
+
+			os.Exit(0)
+
+		default:
+			fmt.Println("Incorrect input!Please try again")
+			goto label11
 
 		}
 
@@ -385,15 +416,24 @@ func IsValidWithdrawAmount(withdrawCash float64, balanceCash float64) bool {
 		return false
 
 	}
+	if withdrawCash > 500 && int(withdrawCash)%100 == 0 {
+		return true
+	}
 
 	withdrawtemp := int(withdrawCash)
 	if withdrawtemp%500 != 0 {
 		return false
 
 	}
+
 	if withdrawCash > 20000 {
 		return false
 	}
+	if !(balanceCash-withdrawCash >= 500) {
+		return false
+
+	}
+
 	return true
 
 }
