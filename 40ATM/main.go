@@ -64,23 +64,23 @@ label1:
 	fmt.Println(strings.Repeat("-", 31))
 	fmt.Println("Press  4 for exit from here-->4")
 	fmt.Println(strings.Repeat("-", 31))
-	var input int
+	var input string
 	fmt.Scan(&input)
 
 	switch input {
-	case 1:
+	case "1":
 		withdrawMoney(&currentuser)
 		goto label1
 
-	case 2:
+	case "2":
 		depositMoney(&currentuser)
 		goto label1
 
-	case 3:
+	case "3":
 		checkBalance(&currentuser)
 		goto label1
 
-	case 4:
+	case "4":
 		fmt.Println("!***Thank you for visiting***!")
 		time.Sleep(time.Millisecond)
 		os.Exit(0)
