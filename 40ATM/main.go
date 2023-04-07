@@ -56,9 +56,13 @@ label0:
 	}
 label1:
 	fmt.Println("Press  1 for withdraw money-->1")
+	fmt.Println(strings.Repeat("-", 31))
 	fmt.Println("Press  2 for deposit money-->2")
+	fmt.Println(strings.Repeat("-", 31))
 	fmt.Println("Press  3 for check balance-->3")
+	fmt.Println(strings.Repeat("-", 31))
 	fmt.Println("Press  4 for exit from here-->4")
+	fmt.Println(strings.Repeat("-", 31))
 	var input int
 	fmt.Scan(&input)
 
@@ -77,7 +81,7 @@ label1:
 
 	case 4:
 		fmt.Println("!***Thank you for visiting***!")
-		time.Sleep(time.Second)
+		time.Sleep(time.Millisecond)
 		os.Exit(0)
 
 	default:
@@ -94,7 +98,7 @@ func withdrawMoney(u *user) {
 label6:
 
 	fmt.Println("!---Decimal values shold not be entered---!")
-	fmt.Println("Enter the amount in multiple of 100 and greater than 500 to withdraw:-")
+	fmt.Println("Enter the amount in multiple of 500 and greater than 500 to withdraw:-")
 	var withdrawAmont string
 	fmt.Scan(&withdrawAmont)
 	withdrawAmont = strings.ReplaceAll(withdrawAmont, ",", "")
@@ -153,6 +157,32 @@ label6:
 		default:
 			fmt.Println("Invalid input")
 			goto label12
+		}
+
+	}
+
+	if int(withdrawcash)%500 != 0 {
+		fmt.Println("!!!Amount shold be in multiple of 500!!!")
+	label13:
+		fmt.Println("Do you want to continue??")
+
+		fmt.Println("Press y for continue:-")
+		fmt.Println("Press n for exit:-")
+		var input3 string
+		fmt.Scan(&input3)
+		input3 = strings.ToLower(input3)
+		switch input3 {
+		case "y":
+			return
+
+		case "n":
+			fmt.Println("!***Thank you for visiting***")
+			time.Sleep(time.Millisecond)
+			os.Exit(0)
+
+		default:
+			fmt.Println("Invalid input")
+			goto label13
 		}
 
 	}
@@ -234,6 +264,34 @@ label3:
 	tempBalance, _ := strconv.ParseFloat(u.balance, 64)
 
 	depositAmount, _ := strconv.ParseFloat(input, 64)
+	if int(depositAmount)%500 != 0 {
+		fmt.Println("!!!Amount shold be in multiple of 500 and greater than 100!!!")
+
+		fmt.Println("Do you want to continue?")
+		fmt.Println("Press y for yes")
+		fmt.Println("Press n for no")
+
+		var choose string
+		fmt.Scan(&choose)
+		choose = strings.ToLower(choose)
+	label14:
+		switch choose {
+		case "y":
+			return
+
+		case "n":
+			fmt.Println("!***Thank you for visiting***!")
+			time.Sleep(time.Millisecond)
+
+			os.Exit(0)
+
+		default:
+			fmt.Println("Incorrect input!Please try again")
+			goto label14
+
+		}
+
+	}
 
 	if depositAmount > 100000 {
 		fmt.Println("You can't enter this large amount ₹", depositAmount)
@@ -416,6 +474,7 @@ func LogInToAccount() (user, error) {
 		if val.AccountNo == acno && val.PIN == pin {
 
 			fmt.Println("!***Welcome ", val.UserName, "***!")
+			fmt.Println(strings.Repeat("*", 26))
 
 			return val, nil
 		}
@@ -444,7 +503,7 @@ func IsValidWithdrawAmount(withdrawCash float64, balanceCash float64) bool {
 
 	}
 
-	if withdrawCash > 500 && int(withdrawCash)%100 == 0 {
+	if withdrawCash > 500 && int(withdrawCash)%500 == 0 {
 		return true
 	}
 
