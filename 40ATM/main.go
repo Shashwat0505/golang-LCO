@@ -102,7 +102,7 @@ label6:
 	fmt.Println("Enter the amount in multiple of 500 and greater than 500 to withdraw:-")
 	var withdrawAmont string
 	fmt.Scan(&withdrawAmont)
-	withdrawAmont = strings.ReplaceAll(withdrawAmont, ",", "")
+
 	if !IsValid(withdrawAmont) {
 		fmt.Println("Invalid amount!!Please try again")
 
@@ -254,7 +254,6 @@ label3:
 	fmt.Println("Enter the amount you want to deposit:-₹")
 	var input string
 	fmt.Scan(&input)
-	input = strings.ReplaceAll(input, ",", "")
 
 	if !IsValid(input) {
 		fmt.Println("Invalid amount!!Please try again")
@@ -418,7 +417,7 @@ label5:
 func IsValid(n string) bool {
 
 	for _, val := range n {
-		if unicode.IsLetter(val) || unicode.IsSymbol(val) || unicode.IsSpace(val) || unicode.IsPunct(val) {
+		if unicode.IsLetter(val) || unicode.IsSymbol(val) || unicode.IsSpace(val) || unicode.IsPunct(val) || unicode.IsPunct(val) {
 			return false
 		}
 	}
