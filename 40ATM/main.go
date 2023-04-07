@@ -131,6 +131,32 @@ label6:
 	tempBalance, _ := strconv.ParseFloat(u.balance, 64)
 	withdrawcash, _ := strconv.ParseFloat(withdrawAmont, 64)
 
+	if withdrawcash > 20000 {
+		fmt.Println("!!!You cant withdraw more than 20,000 in a single day!!!")
+	label12:
+		fmt.Println("Do you want to continue??")
+
+		fmt.Println("Press y for continue:-")
+		fmt.Println("Press n for exit:-")
+		var input3 string
+		fmt.Scan(&input3)
+		input3 = strings.ToLower(input3)
+		switch input3 {
+		case "y":
+			return
+
+		case "n":
+			fmt.Println("!***Thank you for visiting***")
+			time.Sleep(time.Millisecond)
+			os.Exit(0)
+
+		default:
+			fmt.Println("Invalid input")
+			goto label12
+		}
+
+	}
+
 	if !IsValidWithdrawAmount(withdrawcash, tempBalance) {
 
 		fmt.Println("!---Insufficient Balance---!")
@@ -160,7 +186,7 @@ label6:
 
 		tempBalance = tempBalance - withdrawcash
 		u.balance = fmt.Sprintf("%v", tempBalance)
-		fmt.Println("Now your current balance is:-", u.balance)
+		fmt.Println("Now your current balance is:-₹", u.balance)
 
 	label9:
 		fmt.Println("Do you want to continue?")
@@ -194,7 +220,7 @@ func depositMoney(u *user) {
 	fmt.Println(u.UserName)
 	fmt.Println("Your current balance is ₹", u.balance)
 label3:
-	fmt.Println("Enter the amount you want to deposit:-")
+	fmt.Println("Enter the amount you want to deposit:-₹")
 	var input string
 	fmt.Scan(&input)
 	input = strings.ReplaceAll(input, ",", "")
@@ -210,7 +236,7 @@ label3:
 	depositAmount, _ := strconv.ParseFloat(input, 64)
 
 	if depositAmount > 100000 {
-		fmt.Println("You can't enter this large amount", depositAmount)
+		fmt.Println("You can't enter this large amount ₹", depositAmount)
 		fmt.Println("!--Please reduce this amount---!")
 
 		fmt.Println("Do you want to continue?")
@@ -239,7 +265,7 @@ label3:
 
 	}
 	if depositAmount < 100 {
-		fmt.Println("You can't enter this  amount", depositAmount)
+		fmt.Println("You can't enter this  amount ₹", depositAmount)
 		fmt.Println("!--Minimum amount should be greater than 100---!")
 
 		fmt.Println("Do you want to continue?")
@@ -271,7 +297,7 @@ label3:
 
 	u.balance = fmt.Sprintf("%v", tempBalance)
 
-	fmt.Println("Now your balance is:-", u.balance)
+	fmt.Println("Now your balance is:-₹", u.balance)
 label2:
 	fmt.Println("Do you want to continue?")
 	fmt.Println("Press y for yes")
@@ -301,7 +327,8 @@ label2:
 
 // --------------------------------checkBalance-------------------------------------------------------------------------------------------------
 func checkBalance(u *user) {
-	fmt.Println("Your current account balance is:-", u.balance)
+	fmt.Println("Your current account balance is:-₹", u.balance)
+label5:
 	fmt.Println("Do you want to continue?")
 	fmt.Println("Press y for yes")
 	fmt.Println("Press n for no")
@@ -309,7 +336,7 @@ func checkBalance(u *user) {
 	var choose string
 	fmt.Scan(&choose)
 	choose = strings.ToLower(choose)
-label5:
+
 	switch choose {
 	case "y":
 		return
@@ -358,7 +385,7 @@ func CreateNewAccount() {
 	fmt.Println("PIN for your new account is:-", accPinNo)
 
 label4:
-	fmt.Println("Please enter amount of balance you want to add to account")
+	fmt.Println("Please enter amount of balance you want to add to account in ₹")
 	var inputAmount string
 	fmt.Scan(&inputAmount)
 	inputAmount = strings.ReplaceAll(inputAmount, ",", "")
@@ -416,6 +443,7 @@ func IsValidWithdrawAmount(withdrawCash float64, balanceCash float64) bool {
 		return false
 
 	}
+
 	if withdrawCash > 500 && int(withdrawCash)%100 == 0 {
 		return true
 	}
@@ -426,9 +454,6 @@ func IsValidWithdrawAmount(withdrawCash float64, balanceCash float64) bool {
 
 	}
 
-	if withdrawCash > 20000 {
-		return false
-	}
 	if !(balanceCash-withdrawCash >= 500) {
 		return false
 
