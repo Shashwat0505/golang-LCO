@@ -34,6 +34,7 @@ label0:
 	fmt.Println("Press n for new account OR Press l for login to account")
 	var log string
 	fmt.Scan(&log)
+	log = strings.TrimSpace(log)
 	log = strings.ToLower(log)
 
 	switch log {
