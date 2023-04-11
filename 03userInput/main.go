@@ -2,8 +2,6 @@ package main
 
 import (
 	"fmt"
-	"math/rand"
-	"time"
 )
 
 type user struct {
@@ -42,9 +40,15 @@ func main() {
 	// users = append(users, user{UserName: username, PIN: password, balance: inputAmount})
 	// fmt.Println(users)
 
-	min := 1000000000
-	max := 9999999999
-	rand.Seed(time.Now().UnixNano())
-	fmt.Println(rand.Intn(max-min) + min)
+	// min := 1000000000
+	// max := 9999999999
+	// rand.Seed(time.Now().UnixNano())
+	// fmt.Println(rand.Intn(max-min) + min)
+	var player1, player2 string
+	_, err := fmt.Scan(&player1, &player2)
+	if err != nil {
+		fmt.Println("You missed the second player")
+	}
+	fmt.Println(player1, player2)
 
 }
